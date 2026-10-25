@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New {{ $inquiry->type === 'contact' ? 'enquiry' : 'transfer request' }}</title>
+    <style>
+        @font-face { font-family: 'Montserrat'; src: url('{{ url('/fonts/montserrat/montserrat-latin.woff2') }}') format('woff2'); font-weight: 400 800; font-style: normal; font-display: swap; }
+    </style>
+</head>
+<body style="margin:0;background:#f3f0e9;color:#19191d;font-family:'Montserrat','Segoe UI',Arial,Helvetica,sans-serif;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">{{ $inquiry->name }} sent a new {{ $inquiry->type === 'contact' ? 'contact enquiry' : 'transfer request' }}.</div>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f0e9;padding:28px 12px;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:660px;background:#fffefa;border:1px solid #ded8cc;border-radius:8px;overflow:hidden;">
+                    <tr>
+                        <td style="background:#111113;padding:28px 34px;color:#ffffff;">
+                            <img src="{{ $logoUrl }}" width="190" alt="Urgent Travel Services" style="display:block;width:190px;max-width:100%;height:auto;border:0;">
+                            <div style="margin-top:6px;color:#d2a24c;font-size:10px;letter-spacing:2px;text-transform:uppercase;">Private transport, considered</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:34px;">
+                            <div style="color:#9a742d;font-size:10px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">New website enquiry</div>
+                            <h1 style="margin:10px 0 8px;font-family:'Montserrat','Segoe UI',Arial,sans-serif;font-weight:800;font-size:32px;line-height:1.15;letter-spacing:-1px;color:#111113;">{{ $inquiry->type === 'contact' ? 'New contact message' : 'New transfer request' }}</h1>
+                            <p style="margin:0 0 25px;color:#746f66;font-size:14px;line-height:1.7;">Reference <strong style="color:#111113;">{{ $inquiry->reference }}</strong> was submitted on {{ $inquiry->created_at->format('d M Y \a\t H:i') }}.</p>
+
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;font-size:13px;">
+                                @foreach ([
+                                    'Customer' => $inquiry->name,
+                                    'Email' => $inquiry->email,
+                                    'Phone' => $inquiry->phone,
+                                    'Pickup' => $inquiry->pickup,
+                                    'Drop-off' => $inquiry->dropoff,
+                                    'Date' => $inquiry->pickup_date?->format('d M Y'),
+                                    'Time' => $inquiry->pickup_time,
+                                    'Service' => $inquiry->service_type,
+                                    'Journey type' => $inquiry->booking_mode === 'hourly' ? 'Hourly chauffeur' : ($inquiry->trip_type === 'return' ? 'Return transfer' : ($inquiry->trip_type === 'one_way' ? 'One-way transfer' : null)),
+                                    'Vehicle' => $inquiry->vehicle_name,
+                                    'Road distance' => $inquiry->route_distance_km !== null ? $inquiry->route_distance_km.' km' : null,
+                                    'Drive time' => $inquiry->route_duration_minutes ? $inquiry->route_duration_minutes.' minutes' : null,
+                                    'Hire duration' => $inquiry->hourly_duration_hours ? $inquiry->hourly_duration_hours.' hours' : null,
+                                    'Flight' => $inquiry->flight_number,
+                                    'Passengers' => $inquiry->passengers,
+                                    'Luggage' => $inquiry->luggage,
+                                    'Payment' => $inquiry->payment_method,
+                                    'Invoice address' => $inquiry->invoice_address,
+                                    'Estimated total' => $inquiry->estimated_total !== null ? 'EUR '.number_format((float) $inquiry->estimated_total, 2, '.', ',') : null,
+                                    'Message' => $inquiry->message,
+                                ] as $label => $value)
+                                    @if (filled($value))
+                                        <tr>
+                                            <td style="width:120px;border-bottom:1px solid #ebe6dc;padding:10px 12px 10px 0;color:#8b857b;vertical-align:top;">{{ $label }}</td>
+                                            <td style="border-bottom:1px solid #ebe6dc;padding:10px 0;color:#292723;font-weight:600;vertical-align:top;">{{ $value }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </table>
+
+                            @if (! empty($inquiry->selected_extras))
+                                <div style="margin-top:18px;border:1px solid #e4ded2;background:#f8f6f1;padding:15px 17px;">
+                                    <div style="margin-bottom:7px;color:#99732d;font-size:9px;font-weight:bold;letter-spacing:1.4px;text-transform:uppercase;">Selected extras</div>
+                                    @foreach ($inquiry->selected_extras as $extra)
+                                        <div style="display:flex;justify-content:space-between;gap:20px;border-top:1px solid #e8e2d8;padding:6px 0;color:#4f4a43;font-size:11px;">
+                                            <span>{{ $extra['name_en'] ?? $extra['name'] ?? 'Extra' }}{{ ($extra['pricing_type'] ?? 'per_item') === 'per_item' ? ' × '.$extra['quantity'] : '' }}</span>
+                                            <strong style="color:#19191d;">EUR {{ number_format((float) ($extra['line_total'] ?? 0), 2, '.', ',') }}</strong>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                            <table role="presentation" cellspacing="0" cellpadding="0" style="margin-top:28px;">
+                                <tr>
+                                    <td style="background:#d2a24c;border-radius:3px;">
+                                        <a href="{{ $adminUrl }}" style="display:inline-block;padding:13px 20px;color:#111113;font-size:11px;font-weight:bold;letter-spacing:1px;text-decoration:none;text-transform:uppercase;">Open inquiry inbox</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background:#f7f5ef;padding:18px 34px;color:#8c877d;font-size:10px;">
+                            This notification was sent through the Hostinger Mail API. Reply directly to the customer at {{ $inquiry->email }}.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
