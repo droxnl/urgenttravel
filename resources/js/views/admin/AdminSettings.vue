@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import AppIcon from '../../components/AppIcon.vue';
 import { api, validationMessage } from '../../lib/api';
 
@@ -7,6 +7,7 @@ const loading = ref(true);
 const saving = ref(false);
 const testing = ref(false);
 const mailTesting = ref(false);
+const mailTokenChecking = ref(false);
 const mailSendingTest = ref(false);
 const error = ref('');
 const notice = ref('');
@@ -17,6 +18,8 @@ const mailboxes = ref([]);
 const testRecipient = ref('');
 const active = ref('website');
 const form = reactive({});
+let mailboxLookupTimer;
+let mailboxLookupRequest = 0;
 
 onMounted(async () => {
     try {
@@ -76,23 +79,70 @@ async function testAi() {
 }
 
 async function testMail() {
+    clearTimeout(mailboxLookupTimer);
+    mailboxLookupRequest += 1;
+    mailTokenChecking.value = false;
     mailTesting.value = true;
     error.value = '';
     notice.value = '';
     try {
-        const result = await api.adminTestMail();
-        mailboxes.value = result.mailboxes || [];
-        const matchingMailbox = mailboxes.value.find(
-            (mailbox) => mailbox.address?.toLowerCase() === String(form.mail_sender_email || '').toLowerCase(),
-        );
-        if (!form.hostinger_mailbox_resource_id && matchingMailbox) {
-            form.hostinger_mailbox_resource_id = matchingMailbox.resource_id;
-        }
-        notice.value = `Hostinger account connected. ${mailboxes.value.length} mailbox${mailboxes.value.length === 1 ? '' : 'es'} available.`;
+        const result = await api.adminTestMail({
+            hostinger_mail_api_token: form.hostinger_mail_api_token || null,
+        });
+        applyMailboxes(result.mailboxes || [], false);
     } catch (exception) {
         error.value = validationMessage(exception);
     } finally {
         mailTesting.value = false;
+    }
+}
+
+function selectMailbox(mailbox) {
+    form.hostinger_mailbox_resource_id = mailbox.resource_id;
+    form.mail_sender_email = mailbox.address;
+}
+
+function applyMailboxes(available, automatic) {
+    mailboxes.value = available;
+    if (!available.length) {
+        error.value = 'Hostinger connected, but no sender mailboxes were returned.';
+        return;
+    }
+
+    const currentSender = String(form.mail_sender_email || '').toLowerCase();
+    const selected = available.find((mailbox) => mailbox.address?.toLowerCase() === currentSender) || available[0];
+    selectMailbox(selected);
+    notice.value = automatic
+        ? `Mailbox ${selected.address} was detected automatically. Save the email settings to finish.`
+        : `Hostinger account connected. ${available.length} mailbox${available.length === 1 ? '' : 'es'} available.`;
+}
+
+function onMailTokenInput(event) {
+    const token = String(event.target.value || '').trim();
+    clearTimeout(mailboxLookupTimer);
+    mailboxLookupRequest += 1;
+    mailTokenChecking.value = false;
+    form.hostinger_mailbox_resource_id = '';
+    mailboxes.value = [];
+    error.value = '';
+    notice.value = '';
+
+    if (token.length < 8) return;
+    mailboxLookupTimer = window.setTimeout(() => discoverMailbox(token), 700);
+}
+
+async function discoverMailbox(token) {
+    const request = ++mailboxLookupRequest;
+    mailTokenChecking.value = true;
+    try {
+        const result = await api.adminTestMail({ hostinger_mail_api_token: token });
+        if (request !== mailboxLookupRequest) return;
+        applyMailboxes(result.mailboxes || [], true);
+    } catch (exception) {
+        if (request !== mailboxLookupRequest) return;
+        error.value = validationMessage(exception);
+    } finally {
+        if (request === mailboxLookupRequest) mailTokenChecking.value = false;
     }
 }
 
@@ -109,6 +159,10 @@ async function sendTestMail() {
         mailSendingTest.value = false;
     }
 }
+
+onBeforeUnmount(() => {
+    clearTimeout(mailboxLookupTimer);
+});
 </script>
 
 <template>
@@ -150,16 +204,20 @@ async function sendTestMail() {
             </div>
             <div class="ai-config-note">
                 <AppIcon name="mail" :size="23" />
-                <p>In Hostinger hPanel, open <strong>Emails → Agentic Mail → API access</strong>, create a token for the sender mailbox, then paste it below with the mailbox resource ID beginning with <code>AC</code>. The token is encrypted and never returned to the browser.</p>
+                <p>In Hostinger hPanel, open <strong>Emails → Agentic Mail → API access</strong>, create a token for the sender mailbox and paste it below. We connect automatically, load the available mailboxes and select the matching resource ID and sender address. The token is encrypted and never returned to the browser.</p>
             </div>
             <div class="form-grid form-grid--admin">
                 <label class="checkbox-field field--wide"><input v-model="form.mail_enabled" type="checkbox"><span>Enable booking and contact email notifications</span></label>
                 <label class="field field--wide">
                     <span>Hostinger Mail API token <small>{{ mailConfigured ? 'Leave blank to keep the saved token' : 'Required' }}</small></span>
-                    <input v-model="form.hostinger_mail_api_token" type="password" autocomplete="new-password" placeholder="Paste the Agentic Mail API token">
+                    <input v-model="form.hostinger_mail_api_token" type="password" autocomplete="new-password" placeholder="Paste the Agentic Mail API token" @input="onMailTokenInput">
                 </label>
+                <div v-if="mailTokenChecking" class="mail-auto-status field--wide" role="status">
+                    <span class="address-autocomplete__spinner"></span>
+                    <span>Connecting to Hostinger and detecting your sender mailbox…</span>
+                </div>
                 <label class="field">
-                    <span>Mailbox resource ID</span>
+                    <span>Mailbox resource ID <small>Filled automatically</small></span>
                     <input v-model="form.hostinger_mailbox_resource_id" placeholder="AC…">
                 </label>
                 <label class="field">
@@ -173,12 +231,12 @@ async function sendTestMail() {
             </div>
             <div class="ai-config-actions">
                 <button class="button button--gold" :disabled="saving" @click="save">{{ saving ? 'Saving…' : 'Save email settings' }}</button>
-                <button class="button button--ghost" :disabled="mailTesting || (!form.hostinger_mail_api_token && !mailTokenSaved)" @click="testMail">{{ mailTesting ? 'Connecting…' : 'Verify account & load mailboxes' }}</button>
+                <button class="button button--ghost" :disabled="mailTesting || mailTokenChecking || (!form.hostinger_mail_api_token && !mailTokenSaved)" @click="testMail">{{ mailTesting ? 'Connecting…' : 'Refresh mailboxes' }}</button>
             </div>
             <div v-if="mailboxes.length" class="mailbox-picker">
                 <span class="eyebrow">Available sender mailboxes</span>
                 <div class="mailbox-picker__grid">
-                    <button v-for="mailbox in mailboxes" :key="mailbox.resource_id" type="button" :class="{ selected: form.hostinger_mailbox_resource_id === mailbox.resource_id }" @click="form.hostinger_mailbox_resource_id = mailbox.resource_id; form.mail_sender_email = mailbox.address">
+                    <button v-for="mailbox in mailboxes" :key="mailbox.resource_id" type="button" :class="{ selected: form.hostinger_mailbox_resource_id === mailbox.resource_id }" @click="selectMailbox(mailbox)">
                         <AppIcon name="mail" :size="18" />
                         <span><strong>{{ mailbox.address }}</strong><small>{{ mailbox.resource_id }}</small></span>
                         <AppIcon v-if="form.hostinger_mailbox_resource_id === mailbox.resource_id" name="check" :size="16" />

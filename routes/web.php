@@ -46,7 +46,8 @@ Route::prefix('api')->group(function () {
             Route::get('/settings', [SettingsController::class, 'show']);
             Route::put('/settings', [SettingsController::class, 'update']);
             Route::post('/settings/test-openai', [SettingsController::class, 'testOpenAi']);
-            Route::post('/settings/test-mail', [SettingsController::class, 'testMail']);
+            Route::post('/settings/test-mail', [SettingsController::class, 'testMail'])
+                ->middleware('throttle:10,1');
             Route::post('/settings/send-test-mail', [SettingsController::class, 'sendTestMail']);
             Route::get('/booking-settings', [BookingSettingsController::class, 'index']);
             Route::put('/booking-settings', [BookingSettingsController::class, 'update']);

@@ -67,8 +67,8 @@ export const api = {
     adminTestOpenAi() {
         return client.post('/admin/settings/test-openai').then(({ data }) => data);
     },
-    adminTestMail() {
-        return client.post('/admin/settings/test-mail').then(({ data }) => data);
+    adminTestMail(payload = {}) {
+        return client.post('/admin/settings/test-mail', payload).then(({ data }) => data);
     },
     adminSendTestMail(payload) {
         return client.post('/admin/settings/send-test-mail', payload).then(({ data }) => data);

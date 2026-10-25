@@ -69,8 +69,41 @@ class SettingsController extends Controller
         if (array_key_exists('openai_api_key', $validated) && blank($validated['openai_api_key'])) {
             unset($validated['openai_api_key']);
         }
-        if (array_key_exists('hostinger_mail_api_token', $validated) && blank($validated['hostinger_mail_api_token'])) {
-            unset($validated['hostinger_mail_api_token']);
+        if (array_key_exists('hostinger_mail_api_token', $validated)) {
+            $validated['hostinger_mail_api_token'] = trim((string) $validated['hostinger_mail_api_token']);
+            if (blank($validated['hostinger_mail_api_token'])) {
+                unset($validated['hostinger_mail_api_token']);
+            }
+        }
+
+        $newMailToken = $validated['hostinger_mail_api_token'] ?? null;
+        $resourceId = $validated['hostinger_mailbox_resource_id'] ?? SiteSetting::get('hostinger_mailbox_resource_id');
+        if (filled($newMailToken) && blank($resourceId)) {
+            try {
+                $account = $mailer->account($newMailToken);
+                $mailboxes = collect($account['mailboxes'] ?? []);
+                $senderEmail = $validated['mail_sender_email']
+                    ?? SiteSetting::get('mail_sender_email')
+                    ?? SiteSetting::get('email');
+                $mailbox = $mailboxes->first(
+                    fn (array $item) => mb_strtolower((string) ($item['address'] ?? '')) === mb_strtolower((string) $senderEmail)
+                ) ?? $mailboxes->first();
+
+                if (! $mailbox) {
+                    return response()->json([
+                        'message' => 'The Hostinger token connected successfully, but no sender mailbox was returned.',
+                    ], 422);
+                }
+
+                $validated['hostinger_mailbox_resource_id'] = $mailbox['resource_id'];
+                if (blank($validated['mail_sender_email'] ?? null)) {
+                    $validated['mail_sender_email'] = $mailbox['address'];
+                }
+            } catch (Throwable $exception) {
+                return response()->json([
+                    'message' => 'The Hostinger mailbox could not be detected: '.$exception->getMessage(),
+                ], 422);
+            }
         }
 
         foreach ($validated as $key => $value) {
@@ -98,12 +131,16 @@ class SettingsController extends Controller
         }
     }
 
-    public function testMail(HostingerMailService $mailer): JsonResponse
+    public function testMail(Request $request, HostingerMailService $mailer): JsonResponse
     {
+        $validated = $request->validate([
+            'hostinger_mail_api_token' => ['nullable', 'string', 'max:500'],
+        ]);
+
         try {
             return response()->json([
                 'ok' => true,
-                ...$mailer->account(),
+                ...$mailer->account($validated['hostinger_mail_api_token'] ?? null),
             ]);
         } catch (Throwable $exception) {
             return response()->json([

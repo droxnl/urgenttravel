@@ -139,9 +139,10 @@ The application uses the dedicated Hostinger Mail API at `https://api.mail.hosti
 2. Create a token scoped to the mailbox that will send notifications.
 3. Open **Admin → Settings, email & AI → Email notifications**.
 4. Enable notifications and paste the API token.
-5. Save, then select **Verify account & load mailboxes**.
-6. Choose the sender mailbox and confirm the team notification email.
-7. Enable the team alert and/or customer confirmation, save again, and send a test email.
+5. The admin connects to Hostinger automatically and fills in the mailbox resource ID and sender email.
+6. If the account contains multiple mailboxes, choose the correct sender from the returned list.
+7. Confirm the team notification email and save the email settings.
+8. Send a test email. **Refresh mailboxes** remains available if the list needs to be reloaded.
 
 The Mail API token is encrypted and is never returned to the browser after saving. The mailbox resource ID normally begins with `AC`. The token must grant the relevant actions to the selected mailbox.
 

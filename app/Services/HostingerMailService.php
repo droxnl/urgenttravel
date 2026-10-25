@@ -22,9 +22,9 @@ class HostingerMailService
             && filled($this->senderEmail());
     }
 
-    public function account(): array
+    public function account(?string $token = null): array
     {
-        $response = $this->client()->get('me');
+        $response = $this->client($token)->get('me');
         $response->throw();
 
         return [
@@ -72,9 +72,9 @@ class HostingerMailService
         return SiteSetting::get('mail_sender_email') ?: SiteSetting::get('email');
     }
 
-    private function client(): PendingRequest
+    private function client(?string $token = null): PendingRequest
     {
-        $token = $this->token();
+        $token = filled($token) ? trim($token) : $this->token();
         if (blank($token)) {
             throw new RuntimeException('Add a Hostinger Mail API token before connecting.');
         }
