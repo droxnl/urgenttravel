@@ -1354,6 +1354,18 @@
         gap: 8px;
     }
 
+    .journey-ribbon > div {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .journey-ribbon > div > span:first-child,
+    .journey-ribbon > div > span:last-child {
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
     .vehicle-choice > button {
         grid-template-columns: 112px minmax(0, 1fr);
     }

@@ -23,10 +23,10 @@ const { t } = useI18n();
             <aside class="booking-aside">
                 <span class="eyebrow">{{ t('booking.next') }}</span>
                 <ol>
-                    <li><span>01</span><div><strong>{{ t('booking.next1') }}</strong><p>{{ t('booking.next1Text') }}</p></div></li>
-                    <li><span>02</span><div><strong>{{ t('booking.next2') }}</strong><p>{{ t('booking.next2Text') }}</p></div></li>
-                    <li><span>03</span><div><strong>{{ t('booking.next3') }}</strong><p>{{ t('booking.next3Text') }}</p></div></li>
-                    <li><span>04</span><div><strong>{{ t('booking.next4') }}</strong><p>{{ t('booking.next4Text') }}</p></div></li>
+                    <li><span>1</span><div><strong>{{ t('booking.next1') }}</strong><p>{{ t('booking.next1Text') }}</p></div></li>
+                    <li><span>2</span><div><strong>{{ t('booking.next2') }}</strong><p>{{ t('booking.next2Text') }}</p></div></li>
+                    <li><span>3</span><div><strong>{{ t('booking.next3') }}</strong><p>{{ t('booking.next3Text') }}</p></div></li>
+                    <li><span>4</span><div><strong>{{ t('booking.next4') }}</strong><p>{{ t('booking.next4Text') }}</p></div></li>
                 </ol>
                 <div class="booking-aside__promise">
                     <AppIcon name="shield" :size="24" />

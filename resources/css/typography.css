@@ -121,3 +121,710 @@ body .site-app .fleet-page__heading h2 {
         font-size: clamp(34px, 9.5vw, 45px);
     }
 }
+
+/* Readable site-wide type scale */
+:root {
+    --type-caption: 0.75rem;
+    --type-meta: 0.8125rem;
+    --type-small: 0.875rem;
+    --type-body: 1rem;
+    --type-lead: 1.0625rem;
+}
+
+body .site-app,
+body .admin-app {
+    font-size: var(--type-body);
+    line-height: 1.65;
+}
+
+body .site-app h1,
+body .site-app h2,
+body .site-app h3,
+body .site-app h4,
+body .site-app h5,
+body .site-app h6,
+body .site-app p,
+body .site-app li,
+body .site-app dd,
+body .site-app a {
+    overflow-wrap: anywhere;
+}
+
+body .site-app .page-hero__content,
+body .site-app .page-intro__grid,
+body .site-app .content-layout,
+body .site-app .content-layout > *,
+body .site-app .article-body {
+    min-width: 0;
+    max-width: 100%;
+}
+
+body .site-app p,
+body .site-app li,
+body .site-app dd {
+    font-size: var(--type-body);
+    line-height: 1.7;
+}
+
+body .site-app small {
+    font-size: var(--type-meta);
+}
+
+body .site-app .eyebrow,
+body .site-app .breadcrumbs {
+    font-size: var(--type-caption);
+    letter-spacing: 0.14em;
+}
+
+body .site-app .button {
+    font-size: 0.8125rem;
+}
+
+body .site-app .button--small {
+    font-size: 0.6875rem;
+}
+
+body .site-app .text-link {
+    font-size: var(--type-meta);
+}
+
+body .site-app .topline {
+    font-size: 0.6875rem;
+}
+
+body .site-app .desktop-nav a {
+    font-size: 0.75rem;
+}
+
+body .site-app .header-actions .button {
+    font-size: 0.6875rem;
+}
+
+body .site-app .header-phone > span {
+    font-size: 0.8125rem;
+}
+
+body .site-app .header-phone small {
+    font-size: 0.625rem;
+}
+
+body .site-app .field {
+    font-size: var(--type-caption);
+}
+
+body .site-app .field input,
+body .site-app .field select,
+body .site-app .field textarea {
+    font-size: 0.9375rem;
+}
+
+body .site-app .field small {
+    font-size: 0.6875rem;
+}
+
+body .site-app .checkbox-field {
+    font-size: 0.8125rem;
+}
+
+body .site-app .form-alert {
+    font-size: var(--type-small);
+}
+
+body .site-app .footer-brand p,
+body .site-app .footer-brand > a {
+    font-size: var(--type-small);
+    line-height: 1.75;
+}
+
+body .site-app .footer-column h3 {
+    font-size: 0.6875rem;
+}
+
+body .site-app .footer-column a,
+body .site-app .footer-column span,
+body .site-app .footer-column p {
+    font-size: var(--type-meta);
+}
+
+body .site-app .footer-column--contact a {
+    font-size: 0.9375rem;
+}
+
+body .site-app .footer-bottom {
+    font-size: 0.625rem;
+}
+
+body .site-app .hero-meta {
+    font-size: var(--type-caption);
+}
+
+body .site-app .home-hero__lead {
+    font-size: var(--type-lead);
+    line-height: 1.75;
+}
+
+body .site-app .hero-assurance {
+    font-size: var(--type-meta);
+}
+
+body .site-app .hero-booker__head .eyebrow {
+    font-size: 0.6875rem;
+}
+
+body .site-app .hero-booker__head h2 {
+    font-size: 1.75rem;
+}
+
+body .site-app .hero-booker__badge {
+    font-size: 0.6875rem;
+}
+
+body .site-app .booker-tabs button {
+    font-size: var(--type-meta);
+}
+
+body .site-app .booker-field {
+    font-size: var(--type-caption);
+}
+
+body .site-app .booker-field input,
+body .site-app .booker-field select {
+    font-size: 0.9375rem;
+}
+
+body .site-app .hero-booker__notes {
+    font-size: 0.6875rem;
+}
+
+body .site-app .hero-wa > span {
+    font-size: 0.6875rem;
+}
+
+body .site-app .hero-wa strong {
+    font-size: var(--type-meta);
+}
+
+body .site-app .trust-point strong {
+    font-size: var(--type-body);
+}
+
+body .site-app .trust-point span:not(.trust-point__icon) {
+    font-size: var(--type-small);
+}
+
+body .site-app .experience-card span {
+    font-size: var(--type-caption);
+}
+
+body .site-app .about-copy__lead {
+    font-size: var(--type-lead);
+}
+
+body .site-app .about-signature > span:last-child {
+    font-size: var(--type-small);
+}
+
+body .site-app .about-signature small {
+    font-size: var(--type-caption);
+}
+
+body .site-app .section-heading > p,
+body .site-app .fleet-heading > p,
+body .site-app .coverage-heading > p {
+    font-size: var(--type-body);
+}
+
+body .site-app .service-card__kicker,
+body .site-app .fleet-card__label,
+body .site-app .fleet-detail-card > div > span {
+    font-size: var(--type-caption);
+}
+
+body .site-app .service-card p,
+body .site-app .fleet-card p,
+body .site-app .fleet-detail-card p,
+body .site-app .rate-promises p {
+    font-size: var(--type-small);
+}
+
+body .site-app .service-card__link {
+    font-size: var(--type-caption);
+}
+
+body .site-app .province-card__cities a {
+    font-size: var(--type-small);
+}
+
+body .site-app .coverage-footer > span {
+    font-size: var(--type-meta);
+}
+
+body .site-app .page-hero__content > p {
+    font-size: var(--type-lead);
+}
+
+body .site-app .sidebar-card > p {
+    font-size: var(--type-small);
+}
+
+body .site-app .sidebar-card__contact > span {
+    font-size: var(--type-small);
+}
+
+body .site-app .sidebar-card__contact small {
+    font-size: 0.6875rem;
+}
+
+body .site-app .article-body {
+    font-size: var(--type-lead);
+    line-height: 1.8;
+}
+
+body .site-app .article-body p {
+    font-size: inherit;
+}
+
+body .site-app .article-body h4 {
+    font-size: 1.125rem;
+}
+
+body .site-app .article-meta,
+body .site-app .article-body figcaption {
+    font-size: var(--type-caption);
+}
+
+body .site-app .steps-grid p {
+    font-size: var(--type-small);
+}
+
+body .site-app .booking-form-card__header p {
+    font-size: var(--type-small);
+}
+
+body .site-app .form-section h3 {
+    font-size: var(--type-meta);
+}
+
+body .site-app .form-hint,
+body .site-app .form-disclaimer {
+    font-size: var(--type-caption);
+}
+
+body .site-app .booking-aside li strong {
+    font-size: var(--type-small);
+}
+
+body .site-app .booking-aside li p {
+    font-size: var(--type-meta);
+}
+
+body .site-app .booking-aside__promise strong {
+    font-size: var(--type-small);
+}
+
+body .site-app .booking-aside__promise span {
+    font-size: var(--type-meta);
+}
+
+body .site-app .contact-detail small,
+body .site-app .contact-company {
+    font-size: 0.6875rem;
+}
+
+body .site-app .contact-detail strong {
+    font-size: 0.9375rem;
+}
+
+body .site-app .contact-detail em {
+    font-size: var(--type-meta);
+}
+
+/* Booking form */
+body .site-app .booking-steps button > span {
+    font-size: 0.625rem;
+}
+
+body .site-app .booking-steps strong {
+    font-size: 0.6875rem;
+}
+
+body .site-app .booking-wizard__loading p {
+    font-size: var(--type-meta);
+}
+
+body .site-app .wizard-panel__heading h3 {
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+}
+
+body .site-app .wizard-panel__heading p {
+    font-size: var(--type-small);
+}
+
+body .site-app .wizard-panel__heading--split .text-link {
+    font-size: var(--type-caption);
+}
+
+body .site-app .wizard-mode button strong {
+    font-size: 0.9375rem;
+}
+
+body .site-app .wizard-mode button small {
+    font-size: 0.75rem;
+}
+
+body .site-app .wizard-route-fields .field,
+body .site-app .wizard-detail-grid .field {
+    font-size: var(--type-caption);
+}
+
+body .site-app .wizard-route-fields input,
+body .site-app .wizard-route-fields select,
+body .site-app .wizard-detail-grid input,
+body .site-app .wizard-detail-grid textarea {
+    font-size: 0.9375rem;
+}
+
+body .site-app .address-autocomplete {
+    font-size: var(--type-caption);
+}
+
+body .site-app .address-autocomplete__control input {
+    font-size: 0.9375rem;
+}
+
+body .site-app .address-autocomplete__results ul {
+    max-height: 340px;
+    padding: 7px;
+}
+
+body .site-app .address-autocomplete__results li {
+    min-height: 58px;
+    grid-template-columns: 34px minmax(0, 1fr) 18px;
+    gap: 11px;
+    padding: 11px 12px;
+}
+
+body .site-app .address-autocomplete__pin {
+    width: 32px;
+    height: 32px;
+}
+
+body .site-app .address-autocomplete__results strong {
+    font-size: 0.9375rem;
+}
+
+body .site-app .address-autocomplete__results small {
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+body .site-app .address-autocomplete__status {
+    padding: 17px 15px;
+    font-size: var(--type-small);
+}
+
+body .site-app .address-autocomplete__attribution {
+    padding: 8px 12px;
+    font-size: 0.625rem;
+}
+
+body .site-app .hero-booker .address-autocomplete__results {
+    right: 0;
+    left: auto;
+    width: min(480px, calc(100vw - 32px));
+}
+
+body .site-app .route-result__facts strong {
+    font-size: 1.5rem;
+}
+
+body .site-app .route-result__facts small,
+body .site-app .journey-ribbon > div {
+    font-size: var(--type-meta);
+}
+
+body .site-app .journey-ribbon strong {
+    font-size: var(--type-small);
+}
+
+body .site-app .vehicle-category-filter button {
+    font-size: 0.6875rem;
+}
+
+body .site-app .vehicle-choice__image > span {
+    font-size: 0.6875rem;
+}
+
+body .site-app .vehicle-choice__title h4 {
+    font-size: 1.125rem;
+}
+
+body .site-app .vehicle-choice__check {
+    font-size: 0.6875rem;
+}
+
+body .site-app .vehicle-choice__body p {
+    font-size: var(--type-small);
+}
+
+body .site-app .vehicle-choice__capacity {
+    font-size: 0.75rem;
+}
+
+body .site-app .vehicle-choice__price small,
+body .site-app .vehicle-choice__price span {
+    font-size: 0.6875rem;
+}
+
+body .site-app .vehicle-choice__price strong {
+    font-size: var(--type-body);
+}
+
+body .site-app .vehicle-choice__price b {
+    font-size: 1.125rem;
+}
+
+body .site-app .vehicle-choice__price em {
+    font-size: var(--type-caption);
+}
+
+body .site-app .extra-option h4 {
+    font-size: var(--type-small);
+}
+
+body .site-app .extra-option p,
+body .site-app .extra-option > div > span {
+    font-size: var(--type-caption);
+}
+
+body .site-app .extra-toggle {
+    font-size: 0.6875rem;
+}
+
+body .site-app .quantity-control output {
+    font-size: 0.75rem;
+}
+
+body .site-app .payment-options legend {
+    font-size: var(--type-caption);
+}
+
+body .site-app .payment-options strong {
+    font-size: var(--type-small);
+}
+
+body .site-app .payment-options small {
+    font-size: var(--type-meta);
+}
+
+body .site-app .wizard-consent {
+    font-size: var(--type-caption);
+}
+
+body .site-app .wizard-total-strip span {
+    font-size: var(--type-caption);
+}
+
+body .site-app .review-card__head h4,
+body .site-app .review-card__head button {
+    font-size: var(--type-meta);
+}
+
+body .site-app .review-card dl > div,
+body .site-app .review-vehicle strong,
+body .site-app .review-extras li {
+    font-size: var(--type-small);
+}
+
+body .site-app .review-vehicle span {
+    font-size: var(--type-meta);
+}
+
+body .site-app .price-summary__line {
+    font-size: var(--type-small);
+}
+
+body .site-app .price-summary__line small {
+    font-size: var(--type-caption);
+}
+
+body .site-app .price-summary__total {
+    font-size: var(--type-meta);
+}
+
+body .site-app .wizard-request-note {
+    font-size: var(--type-caption);
+}
+
+body .site-app .booking-success > strong,
+body .site-app .booking-success > div span {
+    font-size: var(--type-meta);
+}
+
+body .site-app .booking-success p {
+    font-size: var(--type-small);
+}
+
+/* Admin readability */
+body .admin-app p,
+body .admin-app li {
+    font-size: var(--type-small);
+    line-height: 1.65;
+}
+
+body .admin-app .admin-sidebar__label {
+    font-size: 0.6875rem;
+}
+
+body .admin-app .admin-nav a {
+    font-size: 0.8125rem;
+}
+
+body .admin-app .admin-sidebar__bottom a,
+body .admin-app .admin-sidebar__bottom button {
+    font-size: 0.75rem;
+}
+
+body .admin-app .admin-topbar > div {
+    font-size: var(--type-meta);
+}
+
+body .admin-app .admin-page-head p,
+body .admin-app .admin-panel__head p,
+body .admin-app .editor-panel__head p {
+    font-size: var(--type-small);
+}
+
+body .admin-app .back-link {
+    font-size: var(--type-meta);
+}
+
+body .admin-app .admin-panel__head h2,
+body .admin-app .editor-panel__head h2 {
+    font-size: 1.75rem;
+}
+
+body .admin-app .admin-list__row {
+    font-size: var(--type-small);
+}
+
+body .admin-app .admin-list__row strong {
+    font-size: var(--type-body);
+}
+
+body .admin-app .page-table__row strong {
+    font-size: var(--type-small);
+}
+
+body .admin-app .page-table__row > div span,
+body .admin-app .page-table__head,
+body .admin-app .template-pill,
+body .admin-app .seo-status,
+body .admin-app .publish-status {
+    font-size: var(--type-caption);
+}
+
+body .admin-app .settings-tabs button,
+body .admin-app .editor-tabs button {
+    font-size: var(--type-meta);
+}
+
+body .admin-app .field {
+    font-size: var(--type-caption);
+}
+
+body .admin-app .field input,
+body .admin-app .field select,
+body .admin-app .field textarea {
+    font-size: var(--type-small);
+}
+
+body .admin-app .rich-editor__content p {
+    font-size: var(--type-body);
+}
+
+body .admin-app .ai-config-note p,
+body .admin-app .form-hint,
+body .admin-app .ai-assurance,
+body .admin-app .mail-test-box p {
+    font-size: var(--type-meta);
+}
+
+body .admin-app .mailbox-picker__grid strong {
+    font-size: var(--type-small);
+}
+
+body .admin-app .mailbox-picker__grid small,
+body .admin-app .mail-delivery-row strong,
+body .admin-app .mail-delivery-row span,
+body .admin-app .mail-delivery-row small {
+    font-size: 0.6875rem;
+}
+
+body .admin-app .inquiry-list strong {
+    font-size: var(--type-small);
+}
+
+body .admin-app .inquiry-list button div span,
+body .admin-app .inquiry-list__meta,
+body .admin-app .inquiry-detail dl > div,
+body .admin-app .inquiry-detail__contact {
+    font-size: var(--type-meta);
+}
+
+@media (max-width: 700px) {
+    body .site-app p,
+    body .site-app li,
+    body .site-app dd {
+        line-height: 1.68;
+    }
+
+    body .site-app .desktop-nav a {
+        font-size: 1rem;
+    }
+
+    body .site-app .address-autocomplete__results li {
+        min-height: 62px;
+        padding: 12px;
+    }
+
+    body .site-app .address-autocomplete__results strong,
+    body .site-app .address-autocomplete__results small {
+        display: -webkit-box;
+        overflow: hidden;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    body .site-app .address-autocomplete__results li {
+        grid-template-columns: 32px minmax(0, 1fr);
+    }
+
+    body .site-app .address-autocomplete__results li > svg:last-child {
+        display: none;
+    }
+
+    body .site-app .address-autocomplete__results ul {
+        max-height: min(300px, 48vh);
+    }
+
+    body .site-app .article-body table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 520px) {
+    body .site-app .services-section .section-heading h2 {
+        font-size: clamp(1.625rem, 8.2vw, 2.0625rem);
+        line-height: 1.06;
+        letter-spacing: -0.035em;
+    }
+
+    body .site-app .services-section .section-heading h2 em {
+        white-space: nowrap;
+    }
+}

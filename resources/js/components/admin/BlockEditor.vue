@@ -143,7 +143,7 @@ function addCoverageLink(item) {
                 </div>
 
                 <div v-for="(item, itemIndex) in block.content.items" :key="itemIndex" class="block-item">
-                    <div class="block-item__number">{{ String(itemIndex + 1).padStart(2, '0') }}</div>
+                    <div class="block-item__number">{{ itemIndex + 1 }}</div>
                     <div class="block-item__fields">
                         <template v-if="block.type === 'service_grid'">
                             <label class="field"><span>Title</span><input v-model="item.title"></label>

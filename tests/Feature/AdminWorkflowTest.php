@@ -92,6 +92,32 @@ class AdminWorkflowTest extends TestCase
         ]);
     }
 
+    public function test_email_notification_checkboxes_persist_after_saving_and_reloading(): void
+    {
+        $admin = User::query()->firstOrFail();
+
+        $this->actingAs($admin)
+            ->putJson('/api/admin/settings', [
+                'mail_enabled' => true,
+                'mail_send_admin' => true,
+                'mail_send_customer' => true,
+            ])
+            ->assertOk()
+            ->assertJsonPath('settings.mail_enabled', '1')
+            ->assertJsonPath('settings.mail_send_admin', '1')
+            ->assertJsonPath('settings.mail_send_customer', '1');
+
+        $this->getJson('/api/admin/settings')
+            ->assertOk()
+            ->assertJsonPath('settings.mail_enabled', '1')
+            ->assertJsonPath('settings.mail_send_admin', '1')
+            ->assertJsonPath('settings.mail_send_customer', '1');
+
+        $this->assertDatabaseHas('site_settings', ['key' => 'mail_enabled', 'value' => '1']);
+        $this->assertDatabaseHas('site_settings', ['key' => 'mail_send_admin', 'value' => '1']);
+        $this->assertDatabaseHas('site_settings', ['key' => 'mail_send_customer', 'value' => '1']);
+    }
+
     public function test_an_admin_can_update_the_dutch_page_translation(): void
     {
         $admin = User::query()->firstOrFail();

@@ -733,10 +733,10 @@
     .booking-page__grid,
     .contact-grid { grid-template-columns: 1fr; }
     .page-intro__grid .sidebar-card { max-width: 480px; }
-    .content-layout { grid-template-columns: 1fr; gap: 35px; }
+    .content-layout { grid-template-columns: minmax(0, 1fr); gap: 35px; }
     .content-rail { position: static; }
     .content-rail__line { width: 70px; height: 1px; margin: 14px 0; background: linear-gradient(90deg, var(--gold), transparent); }
-    .booking-aside { position: static; order: -1; }
+    .booking-aside { position: static; order: 2; }
     .steps-grid,
     .rate-promises__grid { grid-template-columns: 1fr; }
 }
@@ -790,4 +790,14 @@
     .fleet-detail-card:nth-child(even) { grid-template-columns: 1fr; }
     .fleet-detail-card:nth-child(even) img { order: 0; }
     .fleet-detail-card img { min-height: 300px; }
+}
+
+@media (max-width: 420px) {
+    .booker-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .booker-field--wide {
+        grid-column: auto;
+    }
 }

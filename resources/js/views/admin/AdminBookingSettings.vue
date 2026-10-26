@@ -134,7 +134,7 @@ async function uploadImage(vehicle, event) {
                 <article v-for="(vehicle, index) in data.vehicles" :key="vehicle.id || `new-${index}`" class="booking-admin-card">
                     <header>
                         <div class="booking-admin-card__title">
-                            <span class="booking-admin-card__number">{{ String(index + 1).padStart(2, '0') }}</span>
+                            <span class="booking-admin-card__number">{{ index + 1 }}</span>
                             <div><strong>{{ vehicle.name_en || 'New vehicle' }}</strong><small>{{ vehicle.key || 'Add a unique key' }}</small></div>
                         </div>
                         <div class="booking-admin-card__controls">
@@ -190,7 +190,7 @@ async function uploadImage(vehicle, event) {
                 <article v-for="(extra, index) in data.extras" :key="extra.id || `new-extra-${index}`" class="booking-admin-card">
                     <header>
                         <div class="booking-admin-card__title">
-                            <span class="booking-admin-card__number">{{ String(index + 1).padStart(2, '0') }}</span>
+                            <span class="booking-admin-card__number">{{ index + 1 }}</span>
                             <div><strong>{{ extra.name_en || 'New extra' }}</strong><small>{{ extra.key || 'Add a unique key' }}</small></div>
                         </div>
                         <div class="booking-admin-card__controls">

@@ -1473,6 +1473,26 @@
     .editor-tabs { overflow-x: auto; }
     .editor-tabs button { flex: 0 0 auto; padding-inline: 11px; }
     .editor-tabs__ai { margin-left: 0; }
+    .settings-tabs {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        border-bottom: 0;
+    }
+    .settings-tabs button {
+        width: 100%;
+        min-height: 42px;
+        justify-content: flex-start;
+        border: 1px solid #ddd7cc;
+        border-radius: 5px;
+        padding: 10px 13px;
+        background: #f8f6f1;
+        text-align: left;
+    }
+    .settings-tabs button.active {
+        border-color: #c6a96d;
+        background: #fcf7eb;
+    }
     .editor-panel { padding: 19px 15px; }
     .form-grid--admin { grid-template-columns: 1fr; }
     .form-grid--admin .field--wide { grid-column: auto; }

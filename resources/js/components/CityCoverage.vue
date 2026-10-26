@@ -18,7 +18,7 @@ const { t, localizedPath } = useI18n();
             </div>
             <div class="coverage-grid">
                 <div v-for="group in cityGroups" :key="group.province" class="province-card">
-                    <span class="province-card__index">{{ String(cityGroups.indexOf(group) + 1).padStart(2, '0') }}</span>
+                    <span class="province-card__index">{{ cityGroups.indexOf(group) + 1 }}</span>
                     <h3>{{ group.province }}</h3>
                     <div class="province-card__cities">
                         <RouterLink v-for="[city, slug] in group.cities" :key="slug" :to="localizedPath(`/${slug}/`)">

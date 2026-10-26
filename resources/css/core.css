@@ -320,17 +320,21 @@ h6 {
 
 .desktop-nav {
     display: flex;
+    min-width: 0;
     align-items: center;
+    flex-wrap: nowrap;
     gap: clamp(17px, 2vw, 30px);
 }
 
 .desktop-nav a {
     position: relative;
+    flex: 0 0 auto;
     padding-block: 10px;
     color: #c6c4bf;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.11em;
+    white-space: nowrap;
     text-transform: uppercase;
     transition: color 0.2s ease;
 }
@@ -361,6 +365,7 @@ h6 {
 
 .header-actions {
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
     gap: 10px;
 }
@@ -821,12 +826,12 @@ h6 {
     .footer-cta h2 { font-size: 41px; }
     .footer-main {
         width: min(100% - 36px, 1240px);
-        grid-template-columns: 1fr;
-        gap: 36px;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 22px;
     }
     .footer-brand,
-    .footer-column--contact { grid-column: auto; }
-    .footer-column--contact { grid-template-columns: 1fr; }
+    .footer-column--contact { grid-column: 1 / -1; }
+    .footer-column--contact { grid-template-columns: 1fr 1fr; }
     .footer-bottom {
         width: min(100% - 36px, 1240px);
         align-items: flex-start;
@@ -834,6 +839,13 @@ h6 {
         gap: 8px;
     }
     .floating-actions { right: 12px; bottom: 12px; }
+}
+
+@media (max-width: 520px) {
+    .footer-brand,
+    .footer-column--contact { grid-column: 1 / -1; }
+
+    .footer-column--contact { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

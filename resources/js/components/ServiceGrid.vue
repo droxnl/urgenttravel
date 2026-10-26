@@ -20,7 +20,7 @@ const services = computed(() => getServices(locale.value));
             </div>
             <div class="service-grid">
                 <RouterLink v-for="(service, index) in services" :key="service.slug" :to="localizedPath(`/${service.slug}/`)" class="service-card">
-                    <span class="service-card__number">{{ String(index + 1).padStart(2, '0') }}</span>
+                    <span class="service-card__number">{{ index + 1 }}</span>
                     <span class="service-card__icon"><AppIcon :name="service.icon" :size="26" /></span>
                     <span class="service-card__kicker">{{ service.kicker }}</span>
                     <h3>{{ service.title }}</h3>

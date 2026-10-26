@@ -18,21 +18,44 @@ const mailboxes = ref([]);
 const testRecipient = ref('');
 const active = ref('website');
 const form = reactive({});
+const BOOLEAN_SETTINGS = [
+    'mail_enabled',
+    'mail_send_admin',
+    'mail_send_customer',
+    'openai_enabled',
+    'openai_auto_seo',
+];
 let mailboxLookupTimer;
 let mailboxLookupRequest = 0;
+
+function booleanValue(value) {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'number') return value === 1;
+    return ['1', 'true', 'on', 'yes'].includes(String(value).toLowerCase());
+}
+
+function applySettings(settings) {
+    Object.assign(form, settings);
+    for (const key of BOOLEAN_SETTINGS) {
+        form[key] = booleanValue(settings[key]);
+    }
+}
+
+function settingsPayload() {
+    const payload = { ...form };
+    for (const key of BOOLEAN_SETTINGS) {
+        payload[key] = booleanValue(payload[key]);
+    }
+    return payload;
+}
 
 onMounted(async () => {
     try {
         const response = await api.adminSettings();
-        Object.assign(form, response.settings);
+        applySettings(response.settings);
         configured.value = response.openai_configured;
         mailConfigured.value = response.mail_configured;
         mailTokenSaved.value = response.mail_credentials_saved;
-        form.openai_enabled = String(form.openai_enabled) === '1' || form.openai_enabled === true;
-        form.openai_auto_seo = String(form.openai_auto_seo) === '1' || form.openai_auto_seo === true;
-        form.mail_enabled = String(form.mail_enabled) === '1' || form.mail_enabled === true;
-        form.mail_send_admin = String(form.mail_send_admin) === '1' || form.mail_send_admin === true;
-        form.mail_send_customer = String(form.mail_send_customer) === '1' || form.mail_send_customer === true;
         form.openai_api_key = '';
         form.hostinger_mail_api_token = '';
         testRecipient.value = form.mail_notification_email || form.email || '';
@@ -48,8 +71,8 @@ async function save() {
     error.value = '';
     notice.value = '';
     try {
-        const response = await api.adminUpdateSettings(form);
-        Object.assign(form, response.settings);
+        const response = await api.adminUpdateSettings(settingsPayload());
+        applySettings(response.settings);
         configured.value = Boolean(form.openai_enabled && (form.openai_api_key || configured.value));
         mailConfigured.value = Boolean(response.mail_configured);
         mailTokenSaved.value = Boolean(response.mail_credentials_saved);

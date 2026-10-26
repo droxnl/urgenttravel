@@ -372,10 +372,11 @@ onMounted(async () => {
                     type="button"
                     :class="{ active: step === item.number, complete: step > item.number }"
                     :aria-current="step === item.number ? 'step' : undefined"
+                    :aria-label="`${item.number}. ${item.label}`"
                     :disabled="item.number >= step"
                     @click="goToStep(item.number)"
                 >
-                    <span>{{ step > item.number ? '✓' : String(item.number).padStart(2, '0') }}</span>
+                    <span>{{ step > item.number ? '✓' : item.number }}</span>
                     <strong>{{ item.label }}</strong>
                 </button>
             </nav>
@@ -390,7 +391,7 @@ onMounted(async () => {
             <Transition v-else name="wizard-step" mode="out-in">
                 <div v-if="step === 1" key="journey" class="wizard-panel">
                     <div class="wizard-panel__heading">
-                        <span>01</span>
+                        <span>1</span>
                         <div><h3>{{ t('bookingFlow.stepRoute') }}</h3><p>{{ journey.booking_mode === 'hourly' ? t('bookingFlow.hourlyText') : t('bookingFlow.transferText') }}</p></div>
                     </div>
 
@@ -456,7 +457,7 @@ onMounted(async () => {
 
                 <div v-else-if="step === 2" key="map" class="wizard-panel wizard-route-panel">
                     <div class="wizard-panel__heading wizard-panel__heading--split">
-                        <span>02</span>
+                        <span>2</span>
                         <div><h3>{{ t('bookingFlow.stepMap') }}</h3><p>{{ t('bookingFlow.mapStepText') }}</p></div>
                         <button type="button" class="text-link" @click="step = 1">{{ t('bookingFlow.changeJourney') }}</button>
                     </div>
@@ -493,7 +494,7 @@ onMounted(async () => {
 
                 <div v-else-if="step === 3" key="vehicle" class="wizard-panel">
                     <div class="wizard-panel__heading wizard-panel__heading--split">
-                        <span>03</span>
+                        <span>3</span>
                         <div><h3>{{ t('bookingFlow.chooseVehicle') }}</h3><p>{{ t('bookingFlow.chooseVehicleText', { passengers: journey.passengers, luggage: journey.luggage }) }}</p></div>
                         <button type="button" class="text-link" @click="step = 1">{{ t('bookingFlow.changeJourney') }}</button>
                     </div>
@@ -528,8 +529,10 @@ onMounted(async () => {
                                     </div>
                                 </div>
                                 <div class="vehicle-choice__price">
-                                    <small>{{ journey.booking_mode === 'hourly' ? t('bookingFlow.perHour') : t('bookingFlow.perKm') }}</small>
-                                    <strong>{{ journey.booking_mode === 'hourly' ? formatMoney(vehicle.hourly_rate) : formatMoney(vehicle.rate_per_km) }}</strong>
+                                    <template v-if="journey.booking_mode === 'hourly'">
+                                        <small>{{ t('bookingFlow.perHour') }}</small>
+                                        <strong>{{ formatMoney(vehicle.hourly_rate) }}</strong>
+                                    </template>
                                     <span>{{ t('bookingFlow.estimated') }}</span>
                                     <b>{{ formatMoney(vehicle.estimated_total) }}</b>
                                     <em v-if="!vehicle.available">{{ t('bookingFlow.noCapacity') }}</em>
@@ -573,7 +576,7 @@ onMounted(async () => {
 
                 <div v-else-if="step === 4" key="details" class="wizard-panel">
                     <div class="wizard-panel__heading">
-                        <span>04</span>
+                        <span>4</span>
                         <div><h3>{{ t('bookingFlow.yourDetails') }}</h3><p>{{ t('bookingFlow.yourDetailsText') }}</p></div>
                     </div>
 
@@ -613,7 +616,7 @@ onMounted(async () => {
 
                 <div v-else key="review" class="wizard-panel wizard-review">
                     <div class="wizard-panel__heading">
-                        <span>05</span>
+                        <span>5</span>
                         <div><h3>{{ t('bookingFlow.review') }}</h3><p>{{ t('bookingFlow.reviewText') }}</p></div>
                     </div>
 

@@ -74,7 +74,7 @@ async function submit() {
 
         <form class="booking-form" @submit.prevent="submit">
             <div v-if="type !== 'contact'" class="form-section">
-                <h3><span>01</span> {{ t('form.journey') }}</h3>
+                <h3><span>1</span> {{ t('form.journey') }}</h3>
                 <div class="form-grid">
                     <label class="field field--wide">
                         <span>{{ t('form.pickup') }}</span>
@@ -122,7 +122,7 @@ async function submit() {
                 </div>
             </div>
             <div class="form-section">
-                <h3><span>02</span> {{ t('form.details') }}</h3>
+                <h3><span>2</span> {{ t('form.details') }}</h3>
                 <div class="form-grid">
                     <label class="field">
                         <span>{{ t('form.name') }}</span>

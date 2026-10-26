@@ -36,19 +36,19 @@ async function logout() {
             <SiteLogo light />
             <span class="admin-sidebar__label">Content studio</span>
             <nav class="admin-nav">
-                <RouterLink to="/admin" exact-active-class="active">
+                <RouterLink to="/admin" exact-active-class="active" aria-label="Overview">
                     <AppIcon name="dashboard" :size="19" /><span>Overview</span>
                 </RouterLink>
-                <RouterLink to="/admin/pages" active-class="active">
+                <RouterLink to="/admin/pages" active-class="active" aria-label="Pages">
                     <AppIcon name="pages" :size="19" /><span>Pages</span>
                 </RouterLink>
-                <RouterLink to="/admin/inquiries" active-class="active">
+                <RouterLink to="/admin/inquiries" active-class="active" aria-label="Inquiries">
                     <AppIcon name="inbox" :size="19" /><span>Inquiries</span>
                 </RouterLink>
-                <RouterLink to="/admin/booking-settings" active-class="active">
+                <RouterLink to="/admin/booking-settings" active-class="active" aria-label="Booking and tariffs">
                     <AppIcon name="car" :size="19" /><span>Booking & tariffs</span>
                 </RouterLink>
-                <RouterLink to="/admin/settings" active-class="active">
+                <RouterLink to="/admin/settings" active-class="active" aria-label="Settings and AI">
                     <AppIcon name="settings" :size="19" /><span>Settings & AI</span>
                 </RouterLink>
             </nav>

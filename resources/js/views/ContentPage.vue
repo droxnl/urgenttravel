@@ -67,9 +67,9 @@ const breadcrumbs = computed(() => {
                 <p>{{ t('page.stepsIntro') }}</p>
             </div>
             <div class="steps-grid">
-                <article><span>01</span><h3>{{ t('page.step1') }}</h3><p>{{ t('page.step1Text') }}</p></article>
-                <article><span>02</span><h3>{{ t('page.step2') }}</h3><p>{{ t('page.step2Text') }}</p></article>
-                <article><span>03</span><h3>{{ t('page.step3') }}</h3><p>{{ t('page.step3Text') }}</p></article>
+                <article><span>1</span><h3>{{ t('page.step1') }}</h3><p>{{ t('page.step1Text') }}</p></article>
+                <article><span>2</span><h3>{{ t('page.step2') }}</h3><p>{{ t('page.step2Text') }}</p></article>
+                <article><span>3</span><h3>{{ t('page.step3') }}</h3><p>{{ t('page.step3Text') }}</p></article>
             </div>
         </div>
     </section>

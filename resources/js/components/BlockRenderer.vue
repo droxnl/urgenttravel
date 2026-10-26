@@ -38,7 +38,7 @@ const items = computed(() => content.value.items || []);
                     :to="localizedPath(item.link)"
                     class="service-card"
                 >
-                    <span class="service-card__number">{{ String(index + 1).padStart(2, '0') }}</span>
+                    <span class="service-card__number">{{ index + 1 }}</span>
                     <span class="service-card__icon"><AppIcon :name="item.icon || 'arrow'" :size="26" /></span>
                     <span class="service-card__kicker">{{ item.kicker }}</span>
                     <h3>{{ item.title }}</h3>
@@ -63,7 +63,7 @@ const items = computed(() => content.value.items || []);
                 <article v-for="(item, index) in items" :key="`${item.title}-${index}`" class="fleet-card">
                     <div class="fleet-card__image">
                         <img :src="item.image" :alt="item.title" loading="lazy">
-                        <span>{{ String(index + 1).padStart(2, '0') }}</span>
+                        <span>{{ index + 1 }}</span>
                     </div>
                     <div class="fleet-card__body">
                         <span class="fleet-card__label">{{ item.label }}</span>
@@ -86,7 +86,7 @@ const items = computed(() => content.value.items || []);
             </div>
             <div class="coverage-grid">
                 <div v-for="(group, index) in items" :key="`${group.title}-${index}`" class="province-card">
-                    <span class="province-card__index">{{ String(index + 1).padStart(2, '0') }}</span>
+                    <span class="province-card__index">{{ index + 1 }}</span>
                     <h3>{{ group.title }}</h3>
                     <div class="province-card__cities">
                         <RouterLink v-for="(link, linkIndex) in group.links" :key="`${link.url}-${linkIndex}`" :to="localizedPath(link.url)">
